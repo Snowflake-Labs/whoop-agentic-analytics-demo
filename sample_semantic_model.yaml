@@ -1,0 +1,72 @@
+name: SEMANTIC_VIEW
+tables:
+  - name: SAMPLE_ACTIVITY_DATA
+    base_table:
+      database: WHOOP
+      schema: USERS
+      table: SAMPLE_ACTIVITY_DATA
+    dimensions:
+      - name: ACUPUNCTURE
+        synonyms:
+          - acupuncture_therapy
+          - alternative_medicine
+          - chinese_medicine
+          - holistic_treatment
+          - needle_therapy
+          - traditional_chinese_medicine
+        description: Indicates whether the user received acupuncture treatment.
+        expr: ACUPUNCTURE
+        data_type: BOOLEAN
+        unique: false
+        sample_values:
+          - 'TRUE'
+          - 'FALSE'
+        is_enum: false
+      - name: ALCOHOL
+        synonyms:
+          - drink
+          - liquor
+          - spirits
+          - intoxicant
+        description: 'Indicates whether user has consumed alcohol on this day. '
+        expr: ALCOHOL
+        data_type: BOOLEAN
+        sample_values:
+          - 'FALSE'
+          - 'TRUE'
+      - name: BLOATING
+        synonyms:
+          - flatulence
+          - bulking
+          - fullness
+        expr: BLOATING
+        data_type: BOOLEAN
+        sample_values:
+          - 'FALSE'
+          - 'TRUE'
+    facts:
+      - name: CUSTOMER_ID
+        synonyms:
+          - user_id
+          - client_id
+          - account_id
+          - customer_number
+          - user_number
+          - account_number
+          - client_number
+          - participant_id
+        description: Unique identifier for a user in the system, used to track and analyze their activity.
+        expr: CUSTOMER_ID
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '837'
+          - '84'
+          - '971'
+verified_queries:
+  - name: Alcohol and bloating
+    question: 'How does alcohol affect feeling of being bloated? '
+    use_as_onboarding_question: true
+    sql: SELECT alcohol, bloating FROM sample_activity_data LIMIT 10
+    verified_by: Anna Filippova
+    verified_at: 1747775166
+custom_instructions: Ensure that all numeric columns are rounded to 2 decimal points in the output.
