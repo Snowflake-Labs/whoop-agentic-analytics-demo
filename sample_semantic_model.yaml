@@ -1,72 +1,249 @@
-name: SEMANTIC_VIEW
+name: SAMPLE_SEMANTIC_MODEL
 tables:
-  - name: SAMPLE_ACTIVITY_DATA
+  - name: SAMPLE_DATA
     base_table:
       database: WHOOP
       schema: USERS
-      table: SAMPLE_ACTIVITY_DATA
+      table: SAMPLE_DATA
     dimensions:
-      - name: ACUPUNCTURE
-        synonyms:
-          - acupuncture_therapy
-          - alternative_medicine
-          - chinese_medicine
-          - holistic_treatment
-          - needle_therapy
-          - traditional_chinese_medicine
-        description: Indicates whether the user received acupuncture treatment.
-        expr: ACUPUNCTURE
-        data_type: BOOLEAN
-        unique: false
+      - name: ANONYMOUS_ID
+        expr: ANONYMOUS_ID
+        data_type: VARCHAR(16777216)
         sample_values:
-          - 'TRUE'
-          - 'FALSE'
-        is_enum: false
-      - name: ALCOHOL
+          - c974009d-d341-4a12-b7e7-194c4228c098
+          - 3d6eb4b2-0501-461d-8dff-23d54ece7bd6
+          - eaaa174a-a4e1-4ee3-9818-3ff6a3cae298
+        description: Unique identifier for an anonymous user, used to track interactions without revealing personal identifiable information.
         synonyms:
-          - drink
-          - liquor
-          - spirits
-          - intoxicant
-        description: 'Indicates whether user has consumed alcohol on this day. '
-        expr: ALCOHOL
-        data_type: BOOLEAN
-        sample_values:
-          - 'FALSE'
-          - 'TRUE'
-      - name: BLOATING
-        synonyms:
-          - flatulence
-          - bulking
-          - fullness
-        expr: BLOATING
-        data_type: BOOLEAN
-        sample_values:
-          - 'FALSE'
-          - 'TRUE'
-    facts:
-      - name: CUSTOMER_ID
-        synonyms:
+          - anonymous_user_id
           - user_id
-          - client_id
-          - account_id
-          - customer_number
-          - user_number
-          - account_number
-          - client_number
           - participant_id
-        description: Unique identifier for a user in the system, used to track and analyze their activity.
-        expr: CUSTOMER_ID
+          - subject_id
+          - anonymous_subject
+          - unique_user_identifier
+          - anonymous_participant_id
+          - user_reference_id
+      - name: MORNING_SUNLIGHT
+        expr: MORNING_SUNLIGHT
+        data_type: BOOLEAN
+        sample_values:
+          - 'FALSE'
+          - 'TRUE'
+        description: Indicates whether the sample was taken during morning sunlight hours.
+        synonyms:
+          - morning_sun
+          - sunlight_exposure
+          - morning_sunlight_exposure
+          - sun_in_morning
+          - morning_sunlight_hours
+          - morning_sunlight_duration
+          - sun_exposure_morning
+      - name: COLD_SHOWER
+        expr: COLD_SHOWER
+        data_type: BOOLEAN
+        sample_values:
+          - 'FALSE'
+          - 'TRUE'
+        description: Indicates whether the shower was taken with cold water.
+        synonyms:
+          - cold_water_shower
+          - icy_shower
+          - cold_water_exposure
+          - cryotherapy_shower
+          - refreshing_shower
+      - name: JET_LAG
+        expr: JET_LAG
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - none
+          - moderate
+          - severe
+        description: The severity of jet lag experienced by an individual, categorized as none, moderate, or severe.
+        synonyms:
+          - travel_across_time_zones
+          - time_zone_difference
+          - time_zone_shift
+          - travel_fatigue
+          - time_change_disruption
+          - crossing_time_zones
+      - name: MULTIVITAMIN
+        expr: MULTIVITAMIN
+        data_type: BOOLEAN
+        sample_values:
+          - 'FALSE'
+          - 'TRUE'
+        description: Indicates whether the patient is taking a multivitamin supplement.
+        synonyms:
+          - daily_supplement
+          - vitamin_intake
+          - multivitamin_consumption
+          - supplement_use
+          - daily_vitamin
+      - name: DAIRY_FREE
+        expr: DAIRY_FREE
+        data_type: BOOLEAN
+        sample_values:
+          - 'TRUE'
+          - 'FALSE'
+        description: Indicates whether a product is free from dairy ingredients.
+        synonyms:
+          - lactose_free
+          - non_dairy
+          - dairy_excluded
+          - milk_free
+          - no_dairy
+      - name: FISH_OIL
+        expr: FISH_OIL
+        data_type: BOOLEAN
+        sample_values:
+          - 'TRUE'
+          - 'FALSE'
+        description: Indicates whether the sample data contains fish oil.
+        synonyms:
+          - omega_3_supplement
+          - fish_oil_supplement
+          - omega_3_fatty_acids
+          - fish_oil_intake
+          - omega_3_consumption
+      - name: FRUITS_AND_VEGETABLES
+        expr: FRUITS_AND_VEGETABLES
+        data_type: BOOLEAN
+        sample_values:
+          - 'TRUE'
+          - 'FALSE'
+        description: Indicates whether the product is a type of fruit or vegetable.
+        synonyms:
+          - produce
+          - greens
+          - plant_based_diet
+          - five_a_day
+          - daily_fruits
+          - vegetable_intake
+          - healthy_eating
+          - plant_food
+          - nutrient_dense_food
+    facts:
+      - name: STEPS
+        expr: STEPS
         data_type: NUMBER(38,0)
         sample_values:
-          - '837'
-          - '84'
-          - '971'
-verified_queries:
-  - name: Alcohol and bloating
-    question: 'How does alcohol affect feeling of being bloated? '
-    use_as_onboarding_question: true
-    sql: SELECT alcohol, bloating FROM sample_activity_data LIMIT 10
-    verified_by: Anna Filippova
-    verified_at: 1747775166
+          - '10689'
+          - '3622'
+          - '9230'
+        description: The total number of steps taken by an individual, as recorded by a fitness tracking device or mobile application, representing a measure of physical activity.
+        synonyms:
+          - daily_steps
+          - step_count
+          - total_steps
+          - steps_taken
+          - daily_step_count
+          - step_total
+          - steps_per_day
+      - name: ENERGY_LEVEL
+        expr: ENERGY_LEVEL
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '1'
+          - '4'
+          - '5'
+        description: A measure of the energy level of a particular activity or event, with higher values indicating greater energy expenditure or intensity.
+        synonyms:
+          - vitality_level
+          - energy_score
+          - vigor_level
+          - physical_energy
+          - mental_energy
+          - fatigue_level
+          - endurance_level
+          - stamina_level
+      - name: HRV
+        expr: HRV
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '91'
+          - '80'
+          - '49'
+        description: Heart Rate Variability (HRV) measures the variation in time between each heartbeat, indicating the autonomic nervous system's activity and stress levels, with higher values typically suggesting better cardiovascular fitness and lower stress.
+        synonyms:
+          - heart_rate_variability
+          - heart_rate_v
+          - rri
+          - heart_rate_recovery
+          - heart_rate_response
+      - name: CALORIES_BURNED
+        expr: CALORIES_BURNED
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '1496'
+          - '1716'
+          - '1847'
+        description: The total number of calories burned by an individual during a specific activity or time period.
+        synonyms:
+          - energy_expended
+          - calories_expenditure
+          - burned_calories
+          - expended_energy
+          - calories_used
+      - name: CALORIES_CONSUMED
+        expr: CALORIES_CONSUMED
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '3411'
+          - '3432'
+          - '3721'
+        description: Total calories consumed by an individual or entity, typically measured over a specific period of time, such as a day or week.
+        synonyms:
+          - calories_intake
+          - daily_caloric_intake
+          - total_calories
+          - calories_eaten
+          - energy_consumed
+          - caloric_consumption
+          - daily_energy_intake
+      - name: FIBER_GS
+        expr: FIBER_GS
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '24'
+          - '5'
+          - '12'
+        description: Fiber Grams per Serving
+        synonyms:
+          - dietary_fiber
+          - fiber_content
+          - fiber_grams
+          - fiber_intake
+          - daily_fiber
+      - name: CAFFEINE_MGS
+        expr: CAFFEINE_MGS
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '448'
+          - '493'
+          - '125'
+        description: The amount of caffeine in milligrams present in a serving of a food or beverage item.
+        synonyms:
+          - caffeine_content
+          - caffeine_amount
+          - caffeine_level
+          - caffeine_dose
+          - caffeine_quantity
+          - mg_caffeine
+      - name: MEDITATION_MINS
+        expr: MEDITATION_MINS
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '45'
+          - '24'
+          - '44'
+        description: The total number of minutes spent meditating.
+        synonyms:
+          - mindfulness_minutes
+          - meditation_time
+          - daily_meditation
+          - relaxation_minutes
+          - calmness_duration
+          - mental_focus_time
+          - quiet_time
+          - stillness_minutes
 custom_instructions: Ensure that all numeric columns are rounded to 2 decimal points in the output.
