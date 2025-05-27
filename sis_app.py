@@ -53,7 +53,7 @@ def llm_agent(PROMPT, MODEL='claude-3-5-sonnet'):
                 }
             },
             "user_analytics": {
-                "semantic_model_file": "@WHOOP.USERS.STAGE/sample_semantic_view.yaml"
+                "semantic_model_file": "@WHOOP.USERS.STAGE/sample_semantic_model2.yaml"
             }
         },
         "tool_choice": {
@@ -180,21 +180,26 @@ def main():
     
     icons = {
         "assistant": "https://raw.githubusercontent.com/streamlit/snowflake-arctic-st-demo/refs/heads/main/Snowflake_Logomark_blue.svg",
-        "user": "⛷️"
+        "user": "⛷️",
+        "code_response": ":material/code:",
+        "data_response": ":material/table:"
     }
     
     # Initialize session state
     if 'messages' not in st.session_state:
-        st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm a Knowledge Agent with access to public data about Whoop. . I'm using `"+st.session_state.model_choice+"`. Ask me anything!"}]
+        st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm a Knowledge Agent with access to public data about Whoop. I'm using `"+st.session_state.model_choice+"`. Ask me anything!"}]
 
     for message in st.session_state.messages:
         with st.chat_message(message['role'], avatar=icons[message["role"]]):
-            st.write(message['content'])
+            if message['role'] == 'code_response':
+                st.code(message['content'], language="sql")
+            else:
+                st.write(message['content'])
 
     if query := st.chat_input("Would you like to learn?"):
         # Add user message to chat
         with st.chat_message("user", avatar=icons['user']):
-            st.markdown(query)
+            st.write(query)
         st.session_state.messages.append({"role": "user", "content": query})
         
         # Get response from API
@@ -235,10 +240,11 @@ def main():
                 #Display and execute SQL if present
                 if sql:
                     st.code(sql, language="sql")                            
-                    st.session_state.messages.append({"role": "assistant", "content": sql})
+                    st.session_state.messages.append({"role": "code_response", "content": sql})
                     results = run_snowflake_query(sql)
                     if results:
                         st.write(results)
+                        st.session_state.messages.append({"role": "data_response", "content": results})
         
             if st.session_state.debug_mode: 
                 if len(tools_used)>0:
