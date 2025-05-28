@@ -39,15 +39,14 @@ def llm_agent(PROMPT, MODEL='claude-3-5-sonnet'):
           
             "pdf_search":{
                 "name": "WHOOP.PUBLIC.PDF_SEARCH",
-                "id_column": "relative_path",
-                "scoring_config": {"reranker": "none"}
+                "id_column": "relative_path"
             }, 
             "locker_search":{
                 "name": "WHOOP.PUBLIC.LOCKER_SEARCH",
                 "id_column": "publication_id",
                 "filter": {
                     "@and": [
-                        { "@gte": { "publication_date": "2022-01-01" } },
+                        #{ "@gte": { "publication_date": "2022-01-01" } },
                         { "@lte": { "publication_date": str(datetime.today().strftime('%Y-%m-%d')) } }
                     ]
                 }
@@ -160,8 +159,8 @@ def display_sidebar():
         
         
         st.session_state.model_choice = st.selectbox(
-            "What LLM would you like to use?",
-            ('claude-3-5-sonnet', 'mistral-large2', 'llama3.3-70b','llama3.1-70b'),
+            "Which LLM would you like to use?",
+            ('claude-3-7-sonnet','claude-3-5-sonnet', 'mistral-large2', 'llama3.3-70b','llama3.1-70b'),
             index=0,
             placeholder='claude-3-5-sonnet'
         )
@@ -210,8 +209,6 @@ def main():
             response = api_call(payload,'/api/v2/cortex/agent:run')
 
         with st.spinner("Parsing..."):
-            #st.write(response)
-            #st.json(response['content'])
             try: 
                 if response['content']:
                     text, sql, citations, tools_used = process_sse_response(json.loads(response['content']))  
