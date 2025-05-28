@@ -1,10 +1,10 @@
 name: SAMPLE_SEMANTIC_MODEL
 tables:
-  - name: SAMPLE_DATA
+  - name: SAMPLE_ACTVITY_DATA
     base_table:
       database: WHOOP
-      schema: USERS
-      table: SAMPLE_DATA
+      schema: PUBLIC
+      table: SAMPLE_ACTIVITY_DATA
     dimensions:
       - name: ANONYMOUS_ID
         expr: ANONYMOUS_ID

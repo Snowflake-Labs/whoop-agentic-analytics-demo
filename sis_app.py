@@ -38,12 +38,12 @@ def llm_agent(PROMPT, MODEL='claude-3-5-sonnet'):
         "tool_resources": {
           
             "pdf_search":{
-                "name": "WHOOP.DOCUMENTS.PDF_SEARCH",
+                "name": "WHOOP.PUBLIC.PDF_SEARCH",
                 "id_column": "relative_path",
                 "scoring_config": {"reranker": "none"}
             }, 
             "locker_search":{
-                "name": "WHOOP.DOCUMENTS.LOCKER_SEARCH",
+                "name": "WHOOP.PUBLIC.LOCKER_SEARCH",
                 "id_column": "publication_id",
                 "filter": {
                     "@and": [
@@ -53,7 +53,7 @@ def llm_agent(PROMPT, MODEL='claude-3-5-sonnet'):
                 }
             },
             "user_analytics": {
-                "semantic_model_file": "@WHOOP.USERS.STAGE/sample_semantic_model2.yaml"
+                "semantic_model_file": "@WHOOP.PUBLIC.SEMANTIC_MODELS/sample_semantic_model.yaml"
             }
         },
         "tool_choice": {
@@ -127,10 +127,12 @@ def process_sse_response(response):
         
                             
     except json.JSONDecodeError as e:
-        st.error(f"Error processing events: {str(e)}")
+        #st.error(f"Error processing events: {str(e)}")
+        st.error(f"Error processing events: {str(response['message'])}")
                 
     except Exception as e:
-        st.error(f"Error processing events: {str(e)}")
+        #st.error(f"Error processing events: {str(e)}")
+        st.error(f"Error processing events: {str(response['message'])}")
         
     return text, sql, citations, tools_used
 
