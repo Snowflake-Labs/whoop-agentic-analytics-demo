@@ -170,7 +170,7 @@ def display_sidebar():
             "Which LLM would you like to use?",
             ('claude-3-7-sonnet','claude-3-5-sonnet', 'mistral-large2', 'llama3.3-70b','llama3.1-70b'),
             index=4,
-            placeholder='llama3.1-70b'
+            placeholder='claude-3-5-sonnet'
         )
 
         st.caption('Select a model then click the button below to start a new conversation with your model choice.')
