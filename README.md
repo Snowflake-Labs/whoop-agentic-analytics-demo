@@ -4,5 +4,5 @@
 2. <a href="https://app.snowflake.com/_deeplink/#/data/add-data?utm_source=snowflake&utm_medium=github&utm_campaign=summit25builderkeynote" target="_blank">Upload</a> all PDF files inside the `data/` folder to `WHOOP.PUBLIC.PDFS` stage.
 3. <a href="https://app.snowflake.com/_deeplink/#/data/add-data?utm_source=snowflake&utm_medium=github&utm_campaign=summit25builderkeynote" target="_blank">Upload</a> `data/locker_data.csv` to `WHOOP.PUBLIC.RAW_DATA` stage
 4. <a href="https://app.snowflake.com/_deeplink/#/data/add-data?utm_source=snowflake&utm_medium=github&utm_campaign=summit25builderkeynote" target="_blank">Upload</a> `sample_semantic_model.yaml` to `WHOOP.PUBLIC.SEMANTIC_MODELS` stage
-5. Run setup/02_load_data_setup_services.sql in a <a href="https://app.snowflake.com/_deeplink/worksheets?utm_source=snowflake&utm_medium=github&utm_campaign=summit25builderkeynote" target="_blank">worksheet</a> 
+5. Run `setup/02_load_data_setup_services.sql` in a <a href="https://app.snowflake.com/_deeplink/worksheets?utm_source=snowflake&utm_medium=github&utm_campaign=summit25builderkeynote" target="_blank">worksheet</a> 
 6. Create a <a href="https://app.snowflake.com/_deeplink/#/streamlit-apps?utm_source=snowflake&utm_medium=github&utm_campaign=summit25builderkeynote" target="_blank">new streamlit app</a> inside WHOOP.PUBLIC. You can use the default warehouse. 
