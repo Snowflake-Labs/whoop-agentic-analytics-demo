@@ -12,25 +12,25 @@ def llm_agent(PROMPT, MODEL='claude-3-5-sonnet'):
 
     payload = {
         "model": MODEL,
-        "response_instruction": "You will always maintain a friendly tone and provide a concise response. Use text to sql first where possible.",
+        "response_instruction": "You will always maintain a friendly tone and provide a concise response.",
         "experimental": {},
         "tools": [
             
           {
             "tool_spec": {
-                "name": "pdf_search",
+                "name": "pdf_search", # approximates unstructured GDrive data
                 "type": "cortex_search"
             }
         }, 
           {
             "tool_spec": {
-                "name": "locker_search",
+                "name": "locker_search", # using public blog post data instead of confluent internal data for demo 
                 "type": "cortex_search"
             }
         }, 
           {
              "tool_spec": {
-                 "name": "user_analytics",
+                 "name": "user_analytics", # mock data generated based on real metrics Whoop tracks
                  "type": "cortex_analyst_text_to_sql"
              } 
           }
@@ -39,18 +39,26 @@ def llm_agent(PROMPT, MODEL='claude-3-5-sonnet'):
           
             "pdf_search":{
                 "name": "WHOOP.PUBLIC.PDF_SEARCH",
-                "id_column": "relative_path"
+                "id_column": "relative_path", 
+                "max_results":2
             }, 
             "locker_search":{
                 "name": "WHOOP.PUBLIC.LOCKER_SEARCH",
                 "id_column": "publication_id",
-                "filter": {
-                    "@and": [
-                        #{ "@gte": { "publication_date": "2022-01-01" } },
-                        { "@lte": { "publication_date": str(datetime.today().strftime('%Y-%m-%d')) } }
-                    ]
-                }
-            },
+                "max_results": 2,
+                #"filter": {
+                #    "@and": [
+                #        { "@gte": { "publication_date": "2023-01-01" } },
+                #        { "@lte": { "publication_date": str(datetime.today().strftime('%Y-%m-%d')) } }
+                #    ]
+                #},
+                
+                "scoring_config": {
+                    "time_decays": [{
+                        "column": "publication_date"
+                        }]
+                }}
+                ,
             "user_analytics": {
                 "semantic_model_file": "@WHOOP.PUBLIC.SEMANTIC_MODELS/sample_semantic_model.yaml"
             }
@@ -147,7 +155,7 @@ def run_snowflake_query(query):
         return None, None
 
 def new_conversation(model_choice):
-     st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm a Knowledge Agent with access to public data about Whoop. I'm using `"+model_choice+"`. Ask me anything!"}]
+     st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm a Knowledge Agent with access to public data about Whoop. Ask me anything!"}]
      st.rerun()
 
 def display_sidebar():
@@ -161,8 +169,8 @@ def display_sidebar():
         st.session_state.model_choice = st.selectbox(
             "Which LLM would you like to use?",
             ('claude-3-7-sonnet','claude-3-5-sonnet', 'mistral-large2', 'llama3.3-70b','llama3.1-70b'),
-            index=0,
-            placeholder='claude-3-5-sonnet'
+            index=4,
+            placeholder='llama3.1-70b'
         )
 
         st.caption('Select a model then click the button below to start a new conversation with your model choice.')
@@ -188,7 +196,7 @@ def main():
     
     # Initialize session state
     if 'messages' not in st.session_state:
-        st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm a Knowledge Agent with access to public data about Whoop. I'm using `"+st.session_state.model_choice+"`. Ask me anything!"}]
+        st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm a Knowledge Agent with access to public data about Whoop. Ask me anything!"}]
 
     for message in st.session_state.messages:
         with st.chat_message(message['role'], avatar=icons[message["role"]]):
