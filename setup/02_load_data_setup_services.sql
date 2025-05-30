@@ -138,24 +138,8 @@ CREATE OR REPLACE TABLE WHOOP.PUBLIC.docs_chunks_table AS
         directory(@WHOOP.PUBLIC.PDFS),
         TABLE(WHOOP.public.pdf_text_chunker(build_scoped_file_url(@WHOOP.PUBLIC.PDFS, relative_path))) AS func;
 
-grant usage on database WHOOP to role PUBLIC;
-grant usage on schema WHOOP.PUBLIC to role PUBLIC;
-grant select on future tables in schema WHOOP.PUBLIC to role PUBLIC;
-
-grant usage on database WHOOP to role PUBLIC;
-grant usage on future schemas in database  WHOOP to role PUBLIC;
-grant select on future tables in database  WHOOP to role PUBLIC;
-
-GRANT ALL ON ALL schemas in database WHOOP TO ROLE PUBLIC; 
-GRANT ALL ON ALL TABLES IN SCHEMA WHOOP.PUBLIC TO ROLE PUBLIC; 
-
-GRANT ALL ON STAGE WHOOP.PUBLIC.PDFS TO ROLE PUBLIC; 
-GRANT ALL ON STAGE WHOOP.PUBLIC.RAW_DATA TO ROLE PUBLIC; 
-GRANT ALL ON STAGE WHOOP.PUBLIC.SEMANTIC_MODELS TO ROLE PUBLIC; 
-
 
 -- Create search services for locker and PDFs
-USE ROLE PUBLIC; 
 CREATE OR REPLACE CORTEX SEARCH SERVICE  WHOOP.PUBLIC.LOCKER_SEARCH
   ON CONTENT
   ATTRIBUTES PUBLICATION_DATE
