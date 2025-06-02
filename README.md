@@ -15,7 +15,7 @@ Prompts to try out:
 * Are supplements correlated with higher energy levels?
 * Which is more predictive of high energy levels: caffeine use or morning sunlight?
 
-#License
+# License
 Copyright (c) Snowflake Inc.  
 This project's codebase is licensed under the Apache License 2.0. You can find the full text of this license in the LICENSE file at the root of this repository.
 
