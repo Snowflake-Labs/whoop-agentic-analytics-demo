@@ -14,3 +14,10 @@ Prompts to try out:
 * How does Whoop track sleep?
 * Are supplements correlated with higher energy levels?
 * Which is more predictive of high energy levels: caffeine use or morning sunlight?
+
+##License
+Copyright (c) Snowflake Inc.  
+This project's codebase is licensed under the Apache License 2.0. You can find the full text of this license in the LICENSE file at the root of this repository.
+
+Copyright (c) WHOOP INC.  
+The data located in the data/ directory is separately licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License. The complete terms of this license are available in the LICENSE-DATA file.
